@@ -10,6 +10,7 @@ fastapi = "*"
 uvicorn = "*"
 spotipy = "*"
 python-dotenv = "*"
+tekore = "*"
 
 [requires]
 python_version = "3.8"

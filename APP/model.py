@@ -21,6 +21,11 @@ c = conn.cursor()
 c.execute('DROP TABLE IF EXISTS spotify')
 dataframe.to_sql('spotify', con=conn)
 
+
+def drop_table():
+    c.execute("""DROP TABLE spotify""")
+    conn.commit()
+
 def create_table():
     c.execute("""CREATE TABLE IF NOT EXISTS spotify(
     album text,

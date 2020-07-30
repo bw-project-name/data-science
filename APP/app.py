@@ -10,12 +10,14 @@ import uvicorn
 from typing import Optional
 from pydantic import BaseModel
 import basilica
-from model import Record
+from model import Record, create_table, drop_table
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
 from spotify import audio_features, album_songs
+from schemas import Record
+
 
 
 client_id = os.getenv("CLIENT_ID")
@@ -54,6 +56,14 @@ def album_songs():
 def audio_features():
     print(audio_features())
     return 
+
+@app.post("/Reset")
+def reset():
+    drop_table()
+    create_table()
+    return
+    
+
 
 
     

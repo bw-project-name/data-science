@@ -21,8 +21,7 @@ BASILICA = basilica.Connection(basilica_key)
 
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-name = {"Drake", "Coldplay", "Grateful Dead", "The Rolling Stones", "Lil Wayne", "Meg & Dia", "DMX", "Meek Mill",
-        "Michael Jackson", "Wu-Tang Clan", "Alicia Keys"}
+name = {"Drake", "Coldplay", "Grateful Dead"}
 result = sp.search(name, limit=20)
 pprint(result)
 

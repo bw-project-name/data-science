@@ -35,13 +35,9 @@ app.add_middleware(
     allow_headers=["*"],
     allow_credentials=True,
 )
-@app.get("/Database")
-def get_db():
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
+@app.get("/Home")
+def get_home():
+    return {"Hello": "World"}
 
 @app.get("/")
 def main():
@@ -52,8 +48,8 @@ def main():
         return
 @app.get("/albums")
 def album_songs():
-    print(album_songs())
-    return
+    return album_songs()
+    
 @app.get("/Audio")
 def audio_features():
     print(audio_features())

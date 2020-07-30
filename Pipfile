@@ -11,6 +11,13 @@ uvicorn = "*"
 spotipy = "*"
 python-dotenv = "*"
 tekore = "*"
+basilica = "*"
+sqlalchemy = "*"
+psycopg2-binary = "*"
+numpy = "*"
+pandas = "*"
+matplotlib = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"

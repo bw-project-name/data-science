@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
-engine = create_engine('sqlite://', echo=False)
+engine = create_engine('sqlite:///', echo=False)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 conn = sqlite3.connect('Spotify.db')

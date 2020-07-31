@@ -10,13 +10,19 @@ import uvicorn
 from typing import Optional
 from pydantic import BaseModel
 import basilica
-from model import Record, create_table, drop_table
+import model
+import schemas
+from schemas import Spotify
+from Database import SessionLocal, engine
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
 from spotify import audio_features, album_songs
-from schemas import Record
+from  typing import List
+model.Base.metadata.create_all(bind=engine)
+
+
 
 
 
@@ -30,6 +36,7 @@ app_token = tk.request_client_token(client_id, client_secret_id)
 sp = tk.Spotify(app_token)
 
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -37,31 +44,44 @@ app.add_middleware(
     allow_headers=["*"],
     allow_credentials=True,
 )
-@app.get("/Home")
-def get_home():
-    return {"Hello": "World"}
-
-@app.get("/")
+@app.get("/", status_code = 200)
 def main():
     return RedirectResponse(url="/docs/")
     all_cats = sp.categories(limit=50)
     for cat in all_cats.items:
         print(cat.name)
         return
+@app.get("/Database")
+def get_db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
+@app.get("/spotify/", response_model=List[schemas.Spotify])
+def show_spotify(db: Session = Depends(get_db)):
+    spotify = db.query(model.Spotify).all()
+    return spotify
+
+
 @app.get("/albums")
 def album_songs():
-    return album_songs()
+    return {"message": "Hello World"}
     
 @app.get("/Audio")
 def audio_features():
-    print(audio_features())
     return 
 
 @app.post("/Reset")
 def reset():
-    drop_table()
-    create_table()
+    db.drop_table()
+    db.create_table()
     return
+
+
+
+if __name__ == '__main__':    
+    uvicorn.run(app)
     
 
 
